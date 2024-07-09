@@ -14,6 +14,30 @@ struct contactoEmail {
 };
 
 void agregarContacto(contactoEmail contactos[], int &numContactos) {
+    if (numContactos < MAX_CONTACTOS) {
+        contactoEmail nuevo;
+        cout << "Ingrese nombre completo: ";
+        cin.ignore();
+        getline(cin, nuevo.nombre);
+        cout << "Ingrese sexo: ";
+        getline(cin, nuevo.sexo);
+        cout << "Ingrese edad: ";
+        cin >> nuevo.edad;
+        cout << "Ingrese teléfono: ";
+        cin.ignore();
+        getline(cin, nuevo.telefono);
+        cout << "Ingrese email: ";
+        getline(cin, nuevo.email);
+        cout << "Ingrese nacionalidad: ";
+        getline(cin, nuevo.nacionalidad);
+        
+        contactos[numContactos] = nuevo;
+        numContactos++;
+
+        cout << "Contacto agregado exitosamente.\n";
+    } else {
+        cout << "La lista de contactos está llena. No se pueden agregar más contactos.\n";
+    }
 }
 
 void eliminarContacto(contactoEmail contactos[], int &numContactos) {
