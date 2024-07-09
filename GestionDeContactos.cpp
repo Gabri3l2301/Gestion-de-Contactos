@@ -30,7 +30,7 @@ void agregarContacto(contactoEmail contactos[], int &numContactos) {
         getline(cin, nuevo.email);
         cout << "Ingrese nacionalidad: ";
         getline(cin, nuevo.nacionalidad);
-        
+
         contactos[numContactos] = nuevo;
         numContactos++;
 
@@ -41,12 +41,41 @@ void agregarContacto(contactoEmail contactos[], int &numContactos) {
 }
 
 void eliminarContacto(contactoEmail contactos[], int &numContactos) {
+    string nombre;
+    cout << "Ingrese el nombre completo del contacto a eliminar: ";
+    cin.ignore();
+    getline(cin, nombre);
+    for (int i = 0; i < numContactos; i++) {
+        if (contactos[i].nombre == nombre) {
+            for (int j = i; j < numContactos - 1; j++) {
+                contactos[j] = contactos[j + 1];
+            }
+            numContactos--;
+            cout << "Contacto eliminado exitosamente.\n";
+            return;
+        }
+    }
+
+    cout << "Contacto no encontrado.\n";
 }
 
 void mostrarContactos(const contactoEmail contactos[], int numContactos) {
+    for (int i = 0; i < numContactos; i++) {
+        cout << "Nombre: " << contactos[i].nombre << ", Sexo: " << contactos[i].sexo
+             << ", Edad: " << contactos[i].edad << ", Teléfono: " << contactos[i].telefono
+             << ", Email: " << contactos[i].email << ", Nacionalidad: " << contactos[i].nacionalidad << '\n';
+    }
+}
+
+bool compararPorServidor(const contactoEmail &a, const contactoEmail &b) {
+    string servidorA = a.email.substr(a.email.find('@') + 1);
+    string servidorB = b.email.substr(b.email.find('@') + 1);
+    return servidorA < servidorB;
 }
 
 void mostrarContactosPorServidor(contactoEmail contactos[], int numContactos) {
+	sort(contactos, contactos + numContactos, compararPorServidor);
+    mostrarContactos(contactos, numContactos);
 }
 
 int main() {
